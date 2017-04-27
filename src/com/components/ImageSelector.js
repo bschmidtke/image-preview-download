@@ -19,13 +19,17 @@ class ImageSelector extends React.Component {
             }
 
             const callback = this.props.onImageLoaded;
+
+            // FileReader to read the selected file.
             const reader = new FileReader();
+
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
                 return function(e) {
-                    // Render thumbnail.
-                    var fileName = encodeURI(theFile.name);
-                    var data = e.target.result;
+                    const fileName = encodeURI(theFile.name);
+                    const data = e.target.result;
+
+                    // If there is a callback, execute the callback providing the file name and file data.
                     if(callback)
                         callback(fileName, data);
                 };
@@ -44,6 +48,7 @@ class ImageSelector extends React.Component {
                 { displayText }
                 <input ref={ (cmpt) => { this.inputSelector = cmpt; } }
                        type="file"
+                       accept=".gif,.jpg,.png,.svg"
                        className="image-selector-input"
                        onChange={ this.handleFileSelect.bind(this)}/>
             </div>

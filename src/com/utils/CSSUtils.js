@@ -10,7 +10,7 @@ export function addStyleSheet( id ) {
     let element = document.getElementById( id );
     if(!element) {
         // Add new style tag so we can append styles to it, allowing us to override css styles.
-        var styleEl = document.createElement('style');
+        const styleEl = document.createElement('style');
         element = document.head.appendChild( styleEl );
         element.setAttribute('id', id);
     }
@@ -51,7 +51,7 @@ export function getStyleIndex( stylesheet, style ) {
     const myRules = stylesheet.cssRules ? stylesheet.cssRules : stylesheet.rules;
     for (let j = 0; j < myRules.length; j++) {
         if (myRules[j].selectorText) {
-            var check = myRules[j].selectorText.toLowerCase();
+            const check = myRules[j].selectorText.toLowerCase();
             switch (check) {
                 case selectorCompare:
                 case selectorCompare2:

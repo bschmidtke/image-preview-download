@@ -41,7 +41,7 @@ export function download( styles,
         styles = CSSArrayToString( styles );
 
     // prepare to Zip files.
-    var zip = new JSZip();
+    let zip = new JSZip();
 
     // append css
     if(styles)
@@ -49,7 +49,7 @@ export function download( styles,
 
     // append custom images.
     if(files && files.length > 0) {
-        var img = zip.folder( imageDirName );
+        let img = zip.folder( imageDirName );
         files.map(( file ) => {
                 const data = trimImageDataUrl(file.fileData);
                 img.file(file.fileName, data, {base64: true})
@@ -71,14 +71,14 @@ export function downloadFile( fileName, data ) {
 
 // Since we know we are dealing with data urls, we need to trim this information off before writing a file.
 export function trimImageDataUrl( data ) {
-    var types = [
+    const types = [
         "data:image/gif;base64,",
         "data:image/png;base64,",
         "data:image/jpg;base64,",
         "data:image/svg+xml;base64,"
     ];
 
-    for(var prefix in types) {
+    for(let prefix in types) {
         if (data.substr(0, types[prefix].length) === types[prefix]) {
             return data.substr(types[prefix].length, data.length);
         }
