@@ -1,12 +1,12 @@
-export function getStyleSheet( id ) {
+export const getStyleSheet = ( id ) => {
     // Add new style tag so we can append out test styles to it, this should override the skin css file
     // that is linked into the application.
     const element = document.getElementById( id );
     if(element) return element.sheet;
     return null;
-}
+};
 
-export function addStyleSheet( id ) {
+export const addStyleSheet = ( id ) => {
     let element = document.getElementById( id );
     if(!element) {
         // Add new style tag so we can append styles to it, allowing us to override css styles.
@@ -15,9 +15,9 @@ export function addStyleSheet( id ) {
         element.setAttribute('id', id);
     }
     return element;
-}
+};
 
-export function addStyleToStyleSheet(styleSheet, style) {
+export const addStyleToStyleSheet = (styleSheet, style) => {
     if(!styleSheet || !style) return null;
 
     try {
@@ -30,18 +30,18 @@ export function addStyleToStyleSheet(styleSheet, style) {
         // Webkit vs. IE vs. Mozilla
         console.warn(e);
     }
-}
+};
 
-export function addStylesToStyleSheet(styleSheet, styles) {
+export const addStylesToStyleSheet = (styleSheet, styles) => {
     if(!styleSheet || !Array.isArray(styles)) return;
 
-    // Map over the styles and inject them into the style tag.
-    styles.map(function (style) {
+    // Iterate over the styles and inject them into the style tag.
+    styles.forEach(function (style) {
         addStyleToStyleSheet( styleSheet, style );
     });
-}
+};
 
-export function getStyleIndex( stylesheet, style ) {
+export const getStyleIndex = ( stylesheet, style ) => {
     // stylesheet.rules[ CSSRuleList ]
     // selectorText
     // cssText
@@ -59,12 +59,12 @@ export function getStyleIndex( stylesheet, style ) {
             }
         }
     }
-}
+};
 
 // Note, this doesn't work with Internet Explorer because they change the css selector text
 // once it is injected into the DOM.
 // TODO: Make compatible with IE.
-export function removeStyleFromStyleSheet( styleSheet, style ) {
+export const removeStyleFromStyleSheet = ( styleSheet, style ) => {
     if(!styleSheet || !style) return null;
 
     try {
@@ -78,36 +78,33 @@ export function removeStyleFromStyleSheet( styleSheet, style ) {
         // webkit vs. ie vs. mozilla
         console.warn(e);
     }
-}
+};
 
 // Returns an object containing the constructed css text, along with the selector text.
-export function createStyle( selectorText, cssText ) {
+export const createStyle = ( selectorText, cssText ) => {
     return {
         // Used for searching for the selector in the style sheet or removing this selector from the StyleSheet.
         selectorText: selectorText,
         // The CSS we will use eventually.
-        cssText: (selectorText + " " + cssText)
+        cssText: `${selectorText} ${cssText}`
     }
-}
+};
 
-export function createBackgroundImageStyle( selector, imageUrl ) {
-    return createStyle( selector,
-        "{ background-image: url('" + imageUrl + "') }");
-}
+export const createBackgroundImageStyle = ( selector, imageUrl ) => {
+    return createStyle( selector, `{ background-image: url( '${imageUrl}' ) }`);
+};
 
-export function createBackgroundDataImageStyle( selector, data ) {
-    return createStyle( selector,
-        "{ background-image: url(" + data + ") }");
-}
+export const createBackgroundDataImageStyle = ( selector, data ) => {
+    return createStyle( selector, `{ background-image: url( ${data} ) }`);
+};
 
 // Flattens an array of strings into a single string.
-export function CSSArrayToString( value ) {
+export const CSSArrayToString = ( value ) => {
     if(!Array.isArray(value)) return value;
     if(value.length == 0) return "";
 
-    const results = value.reduce(function(acc, val) {
+    return value.reduce(function(acc, val) {
         if(!acc) return val;
-        return acc + "\n" + val ;
+        return `${acc} \n ${val}`;
     });
-    return results;
-}
+};

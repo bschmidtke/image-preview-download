@@ -5,9 +5,9 @@ import { CSSArrayToString } from './CSSUtils';
 export function buildImagePath( imageDirectory, fileName ) {
     if(!fileName || !fileName.trim()) return null;
     if(!imageDirectory || !imageDirectory.trim())
-        return "./" + fileName;
+        return `./${fileName}`;
 
-    return "./" + imageDirectory + "/" + fileName;
+    return `./${imageDirectory}/${fileName}`;
 }
 
 export function download( styles,
